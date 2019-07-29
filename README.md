@@ -2,7 +2,7 @@
 
 The simple visual combat log addon that displays skill/spell icons, and includes detailed mouseover statistics. This addon has [been around since Vanilla and TBC](https://www.wowinterface.com/portal.php?a=newsarchiveitem&id=41&newsid=614), and now it's available for Classic WoW 1.13.2.
 
-![EavesDrop Log](https://user-images.githubusercontent.com/52019397/62082481-d85b3900-b222-11e9-95a0-d40d0aa9ac63.png) ![EavesDrop Options](https://user-images.githubusercontent.com/52019397/62082258-68e54980-b222-11e9-8fac-d87d86f0c7cc.png)
+![EavesDrop Log](https://user-images.githubusercontent.com/52019397/62082232-58cd6a00-b222-11e9-9ba2-7f828d2640c0.png)
 
 ## About
 
