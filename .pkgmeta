@@ -1,0 +1,10 @@
+enable-nolib-creation: no
+
+externals:
+  libs/eCastingBarClassic:
+    url: git://github.com/shoestare/EavesDropClassic
+    tag: release
+
+ignore:
+    - .gitignore
+    - README.md
