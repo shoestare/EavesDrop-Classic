@@ -685,7 +685,7 @@ function EavesDrop:GetDefaultConfig()
       ["SKILLC"] = {r = 0, g = 0, b = 1},
       ["FRAME"] = {r = 0, g = 0, b = 0, a = 0.33},
       ["BORDER"] = {r = 1, g = 1, b = 1, a = 0.75},
-      ["LABELC"] = {r = 1, g = 1, b = 0, a = 1},
+      ["LABELC"] = {r = 1, g = 1, b = 1, a = 1},
       ["PETO"] =  {r = 0.6, g = 0.6, b = 0.0},
       ["PETI"] =  {r = 0.6, g = 0.6, b = 0.0},
       ["PGAIN"] =  {r = 1.0, g = 1.0, b = 0.0},
