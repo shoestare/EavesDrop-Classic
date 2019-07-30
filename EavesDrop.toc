@@ -1,11 +1,12 @@
 ## Interface: 11302
 ## Title: EavesDrop Classic
 ## Notes: A simple visual combat log with spell/skill icons.
+## DefaultState: Enabled
+## LoadOnDemand: 0
 ## Version: 1.0.0
 ## Author: shoestare
 ## SavedVariables: EavesDropDB
 ## SavedVariablesPerCharacter: EavesDropStatsDB
-## OptionalDeps: Ace3, LibSharedMedia-3.0
 ## X-Curse-Project-ID: 332848
 
 embeds.xml
