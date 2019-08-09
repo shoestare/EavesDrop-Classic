@@ -587,8 +587,8 @@
 				<Offset x="-4" y="-2"/>
 			</Anchor>
 		</Anchors>
-		<NormalTexture file="Interface\Icons\Ability_Hunter_Readiness"/>
-		<PushedTexture file="Interface\Icons\Ability_Hunter_Readiness"/>
+		<NormalTexture file="Interface\AddOns\EavesDrop\textures\Ability_Hunter_Readiness.tga"/>
+		<PushedTexture file="Interface\AddOns\EavesDrop\textures\Ability_Hunter_Readiness.tga"/>
 		<Scripts>
 			<OnClick>
 				EavesDrop:ShowHistory()
@@ -803,8 +803,8 @@
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeTo="$parentOutgoingHeal" relativePoint="TOPRIGHT"/>
 				</Anchors>
-				<NormalTexture file="Interface\Icons\Ability_Warrior_Rampage"/>
-				<PushedTexture file="Interface\Icons\Ability_Warrior_Rampage"/>
+				<NormalTexture file="Interface\AddOns\EavesDrop\textures\Ability_Warrior_Rampage.tga"/>
+				<PushedTexture file="Interface\AddOns\EavesDrop\textures\Ability_Warrior_Rampage.tga"/>
 				<Scripts>
 					<OnClick>
 						EavesDrop:SetDisplay(-1, "hit")
