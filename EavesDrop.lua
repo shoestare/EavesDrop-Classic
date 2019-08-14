@@ -1,4 +1,5 @@
-﻿--[[
+﻿local _, namespace = ...
+--[[
   ****************************************************************
   EavesDrop
 
@@ -61,9 +62,11 @@ end
 --API calls
 local UnitName = UnitName
 local UnitXP = UnitXP
-local GetSpellInfo = GetSpellInfo
+local GetSpellInfo = _G.GetSpellInfo
+local GetSpellTexture = _G.GetSpellTexture
 local GetTime = GetTime
 local InCombatLockdown = InCombatLockdown
+local castedSpells = namespace.castedSpells
 
 --Combat log locals
 local pxp = UnitXP("player")
@@ -411,8 +414,9 @@ function EavesDrop:ShowFrame()
 end
 
 function EavesDrop:CombatEvent()
-  local timestamp, event, hideCaster, sourceGUID, sourceName, sourceFlags, sourceFlags2, destGUID, destName, destFlags, destFlags2, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12 = CombatLogGetCurrentEventInfo()
+  local _, timestamp, event, hideCaster, sourceGUID, sourceName, sourceFlags, sourceFlags2, destGUID, destName, destFlags, destFlags2, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12 = CombatLogGetCurrentEventInfo()
   local etype = COMBAT_EVENTS[event]
+  local spellID = castedSpells[spellName]
   if not etype then return end
 
   if not Blizzard_CombatLog_CurrentSettings then
@@ -475,7 +479,7 @@ function EavesDrop:CombatEvent()
       outtype, intype = "TSPELL", "PSPELL"
     else
       spellId, spellName, spellSchool, amount, overDamage, school, resisted, blocked, absorbed, critical, glancing, crushing = a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12
-      texture = select(3, GetSpellInfo(spellId))
+      texture = select(3, GetSpellTexture(spellId))
       outtype, intype = "TSPELL", "PSPELL"
     end
     text = tostring(shortenValue(amount))
@@ -509,7 +513,7 @@ function EavesDrop:CombatEvent()
   ------------buff/debuff gain----------------
   elseif etype == "BUFF" then
     spellId, spellName, spellSchool, auraType, amount = a1, a2, a3, a4, a5
-    texture = select(3, GetSpellInfo(spellId))
+    texture = select(3, GetSpellTexture(spellId))
     if toPlayer and db[auraType] then
       self:DisplayEvent(INCOMING, self:ShortenString(spellName), texture, db["P"..auraType], message)
     else return
@@ -517,7 +521,7 @@ function EavesDrop:CombatEvent()
   ------------buff/debuff lose----------------
   elseif etype == "FADE" then
     spellId, spellName, spellSchool, auraType, amount = a1, a2, a3, a4, a5
-    texture = select(3, GetSpellInfo(spellId))
+    texture = select(3, GetSpellTexture(spellId))
     if toPlayer and db[auraType.."FADE"] then
       self:DisplayEvent(INCOMING, self:ShortenString(spellName).." "..L["Fades"], texture, db["P"..auraType], message)
     else return
@@ -526,7 +530,7 @@ function EavesDrop:CombatEvent()
   elseif etype == "HEAL" then
     spellId, spellName, spellSchool, amount, overHeal, absorbed, critical = a1, a2, a3, a4, a5, a6, a7
     text = tostring(shortenValue(amount))
-    texture = select(3, GetSpellInfo(spellId))
+    texture = select(3, GetSpellTexture(spellId))
 
     if toPlayer then
       totHealingIn = totHealingIn + amount
@@ -560,7 +564,7 @@ function EavesDrop:CombatEvent()
       tcolor = "TMELEE"
     else
       spellId, spellName, spellSchool, missType = a1, a2, a3, a4
-      texture = select(3, GetSpellInfo(spellId))
+      texture = select(3, GetSpellTexture(spellId))
       tcolor = "TSPELL"
     end
     text = _G[missType]
@@ -577,7 +581,7 @@ function EavesDrop:CombatEvent()
   elseif etype == "DRAIN" then
     if (db["GAINS"]) then
       spellId, spellName, spellSchool, amount, powerType, extraAmount = a1, a2, a3, a4, a5, a6
-      texture = select(3, GetSpellInfo(spellId))
+      texture = select(3, GetSpellTexture(spellId))
       if toPlayer then
         text = string_format("-%d %s", amount, string_nil(""))
         color = db["PGAIN"]
@@ -597,7 +601,7 @@ function EavesDrop:CombatEvent()
   elseif etype == "POWER" then
     if (db["GAINS"]) then
       spellId, spellName, spellSchool, amount, powerType = a1, a2, a3, a4, a5
-      texture = select(3, GetSpellInfo(spellId))
+      texture = select(3, GetSpellTexture(spellId))
       if toPlayer then
         if (amount < db["MFILTER"]) then return end
         color = db["PGAIN"]
@@ -984,7 +988,7 @@ end
 --Set last reflection
 function EavesDrop:ParseReflect(timestamp, event, hideCaster, sourceGUID, sourceName, sourceFlags, sourceFlags2, destGUID, destName, destFlags, destFlags2, ...)
   local spellId, spellName, spellSchool, amount, school, resisted, blocked, absorbed, critical, glancing, crushing = ...
-  local texture = select(3, GetSpellInfo(spellId))
+  local texture = select(3, GetSpellTexture(spellId))
   local text = amount
   local messsage = CombatLog_OnEvent(Blizzard_CombatLog_CurrentSettings, timestamp, event, hideCaster, sourceGUID, sourceName, sourceFlags, sourceFlags2, destGUID, destName, destFlags, destFlags2, ...)
 

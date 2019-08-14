@@ -3,7 +3,7 @@
 ## Notes: A simple visual combat log with spell/skill icons.
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
-## Version: 1.0.0
+## Version: 1.1.0
 ## Author: shoestare
 ## SavedVariables: EavesDropDB
 ## SavedVariablesPerCharacter: EavesDropStatsDB
@@ -14,6 +14,7 @@ embeds.xml
 locals\localization-enUS.lua
 locals\localization-koKR.lua
 locals\localization-zhCN.lua
+Data.lua
 EavesDrop.lua
 EavesDropStats.lua
 options.lua
