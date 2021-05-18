@@ -2,10 +2,10 @@
 
 	<!-- Fonts -->
 	<Font name="EavesDropFontNormal" inherits="GameFontNormal" virtual="true"/>
-	<Font name="EavesDropFontNormalSmall" inherits="GameFontNormalSmall" virtual="true"/>
+  <Font name="EavesDropFontNormalSmall" inherits="GameFontNormalSmall" virtual="true"/>
 
 	<!-- EVENT TEMPLATE -->
-	<Frame name="EavesDropEventTemplate" virtual="true" inherits="BackdropTemplate">
+	<Frame name="EavesDropEventTemplate" virtual="true">
 		<Size>
 			<AbsDimension x="200" y="21"/>
 		</Size>
@@ -96,21 +96,21 @@
 				GameTooltip:Hide();
 			</OnLeave>
 			<OnMouseDown>
-				if button == "LeftButton" and IsShiftKeyDown() and self.tooltipText then
-				EavesDrop:SendToChat(self.tooltipText)
-				elseif IsAltKeyDown() then
-				if button == "LeftButton" then
-				EavesDrop:OpenMenu()
-				elseif button == "RightButton" then
-				EavesDrop:ShowHistory()
-				end
-				end
+       	if button == "LeftButton" and IsShiftKeyDown() and self.tooltipText then
+					EavesDrop:SendToChat(self.tooltipText)
+			  elseif IsAltKeyDown() then
+			  	if button == "LeftButton" then
+			  		EavesDrop:OpenMenu()
+			  	elseif button == "RightButton" then
+       			EavesDrop:ShowHistory()
+       		end
+			  end
 			</OnMouseDown>
 		</Scripts>
 	</Frame>
 
 	<!-- EVENT HISTORY TEMPLATE -->
-	<Frame name="EavesDropHistoryEventTemplate" virtual="true" inherits="BackdropTemplate">
+	<Frame name="EavesDropHistoryEventTemplate" virtual="true">
 		<Size>
 			<AbsDimension x="200" y="20" />
 		</Size>
@@ -164,8 +164,8 @@
 			<OnEnter>
 				self:SetBackdropColor(1, 1, 1, 1);
 				if ( self.tooltipText ) then
-				GameTooltip:SetOwner(self, EavesDrop.ToolTipAnchor);
-				GameTooltip:SetText(self.tooltipText, nil, nil, nil, nil, 1);
+					GameTooltip:SetOwner(self, EavesDrop.ToolTipAnchor);
+					GameTooltip:SetText(self.tooltipText, nil, nil, nil, nil, 1);
 				end
 			</OnEnter>
 			<OnLeave>
@@ -173,11 +173,11 @@
 				GameTooltip:Hide();
 			</OnLeave>
 			<OnMouseDown>
-				if button == "LeftButton" and IsShiftKeyDown() and self.tooltipText2 then
-				EavesDrop:SendToChat(self.tooltipText2)
-				elseif button == "RightButton" and IsShiftKeyDown() and self.tooltipText1 then
-				EavesDrop:SendToChat(self.tooltipText1)
-				end
+       	if button == "LeftButton" and IsShiftKeyDown() and self.tooltipText2 then
+					EavesDrop:SendToChat(self.tooltipText2)
+			  elseif button == "RightButton" and IsShiftKeyDown() and self.tooltipText1 then
+					EavesDrop:SendToChat(self.tooltipText1)
+			  end
 			</OnMouseDown>
 		</Scripts>
 	</Frame>
@@ -191,8 +191,8 @@
 		<Scripts>
 			<OnEnter>
 				if ( self.tooltipText ) then
-				GameTooltip:SetOwner(self, EavesDrop.ToolTipAnchor);
-				GameTooltip:SetText(self.tooltipText, nil, nil, nil, nil, 1);
+					GameTooltip:SetOwner(self, EavesDrop.ToolTipAnchor);
+					GameTooltip:SetText(self.tooltipText, nil, nil, nil, nil, 1);
 				end
 			</OnEnter>
 			<OnLeave>
@@ -202,7 +202,7 @@
 	</Button>
 
 	<!-- MAIN FRAME -->
-	<Frame name="EavesDropFrame" enableMouse="true" movable="true" frameStrata="LOW" parent="UIParent" inherits="BackdropTemplate">
+	<Frame name="EavesDropFrame" enableMouse="true" movable="true" frameStrata="LOW" parent="UIParent">
 		<Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
 			<EdgeSize>
 				<AbsValue val="16"/>
@@ -394,12 +394,12 @@
 					<OnClick>
 						PlaySound(SOUNDKIT.IG_CHAT_SCROLL_DOWN);
 						if IsShiftKeyDown() then
-						EavesDrop:ScrollToBottom()
-						elseif IsControlKeyDown() then
-						EavesDrop:FindCombatDown()
-						else
-						EavesDrop:ScrollDown()
-						end
+		            EavesDrop:ScrollToBottom()
+		        elseif IsControlKeyDown() then
+    						EavesDrop:FindCombatDown()
+		        else
+		            EavesDrop:ScrollDown()
+		        end
 					</OnClick>
 					<OnEnter>
 						GameTooltip:SetOwner(self, EavesDrop.ToolTipAnchor);
@@ -429,14 +429,14 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						PlaySound(SOUNDKIT.IG_CHAT_SCROLL_UP);
-						if IsShiftKeyDown() then
-						EavesDrop:ScrollToTop()
-						elseif IsControlKeyDown() then
-						EavesDrop:FindCombatUp()
-						else
-						EavesDrop:ScrollUp()
-						end
+							PlaySound(SOUNDKIT.IG_CHAT_SCROLL_UP);
+							if IsShiftKeyDown() then
+			            EavesDrop:ScrollToTop()
+			        elseif IsControlKeyDown() then
+    							EavesDrop:FindCombatUp()
+			        else
+			            EavesDrop:ScrollUp()
+			        end
 					</OnClick>
 					<OnEnter>
 						GameTooltip:SetOwner(self, EavesDrop.ToolTipAnchor);
@@ -464,13 +464,13 @@
 				EavesDropTab:SetAlpha(0);
 			</OnLeave>
 			<OnMouseDown>
-				if IsAltKeyDown() then
-				if button == "LeftButton" then
-				EavesDrop:OpenMenu()
-				elseif button == "RightButton" then
-				EavesDrop:ShowHistory()
-				end
-				end
+       	if IsAltKeyDown() then
+			  	if button == "LeftButton" then
+			  		EavesDrop:OpenMenu()
+			  	elseif button == "RightButton" then
+       			EavesDrop:ShowHistory()
+       		end
+			  end
 			</OnMouseDown>
 		</Scripts>
 	</Frame>
@@ -524,9 +524,9 @@
 			</OnLoad>
 			<OnMouseDown>
 				GameTooltip:Hide();
-				if button == "RightButton" then
-				EavesDrop:OpenMenu()
-				end
+       	if button == "RightButton" then
+			  	EavesDrop:OpenMenu()
+			  end
 			</OnMouseDown>
 			<OnEnter>
 				EavesDropTab:SetAlpha(1);
@@ -539,17 +539,17 @@
 			</OnLeave>
 			<OnDragStart>
 				if (not EavesDrop.db.profile["LOCKED"] ) then
-				EavesDropFrame:StartMoving();
-				end
+			 		EavesDropFrame:StartMoving();
+			 	end
 			</OnDragStart>
 			<OnDragStop>
 				EavesDropFrame:StopMovingOrSizing();
 				local x, y = EavesDropFrame:GetLeft(), EavesDropFrame:GetTop()
-				local es = EavesDropFrame:GetEffectiveScale()
-				local ps = UIParent:GetScale()
-				x = x*es - GetScreenWidth()*ps/2
-				y = y*es - GetScreenHeight()*ps/2
-				EavesDrop.db.profile.x, EavesDrop.db.profile.y = x, y
+        local es = EavesDropFrame:GetEffectiveScale()
+        local ps = UIParent:GetScale()
+        x = x*es - GetScreenWidth()*ps/2
+        y = y*es - GetScreenHeight()*ps/2
+        EavesDrop.db.profile.x, EavesDrop.db.profile.y = x, y
 			</OnDragStop>
 		</Scripts>
 		<ButtonText name="$parentText" text="EavesDrop">
@@ -606,7 +606,7 @@
 	</Button>
 
 	<!-- HISTORY FRAME -->
-	<Frame name="EavesDropHistoryFrame" enableMouse="true" movable="true" frameStrata="LOW" clampedToScreen="true" parent="UIParent" hidden="true" inherits="BackdropTemplate">
+	<Frame name="EavesDropHistoryFrame" enableMouse="true" movable="true" frameStrata="LOW" clampedToScreen="true" parent="UIParent" hidden="true">
 		<Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
 			<EdgeSize>
 				<AbsValue val="16"/>
@@ -694,27 +694,27 @@
 		</Layers>
 		<Frames>
 			<ScrollFrame name="EavesDropHistoryScrollBar" inherits="FauxScrollFrameTemplate" hidden="false">
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset>
-							<AbsDimension x="0" y="-25"/>
-						</Offset>
-					</Anchor>
-					<Anchor point="BOTTOMRIGHT">
-						<Offset>
-							<AbsDimension x="-27" y="25"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnVerticalScroll>
-						FauxScrollFrame_OnVerticalScroll(self, offset, 16, EavesDrop.ScrollBar_Update);
-					</OnVerticalScroll>
-					<OnShow>
-						EavesDrop:ScrollBar_Update()
-					</OnShow>
-				</Scripts>
-			</ScrollFrame>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset>
+              <AbsDimension x="0" y="-25"/>
+            </Offset>
+          </Anchor>
+          <Anchor point="BOTTOMRIGHT">
+            <Offset>
+              <AbsDimension x="-27" y="25"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnVerticalScroll>
+            FauxScrollFrame_OnVerticalScroll(self, offset, 16, EavesDrop.ScrollBar_Update);
+          </OnVerticalScroll>
+          <OnShow>
+            EavesDrop:ScrollBar_Update()
+          </OnShow>
+        </Scripts>
+      </ScrollFrame>
 			<Frame name="EavesDropHistoryEvent1" inherits="EavesDropHistoryEventTemplate" hidden="true">
 				<Anchors>
 					<Anchor point="TOP" relativeTo="EavesDropHistoryFrame" relativePoint="TOP">
@@ -850,8 +850,8 @@
 					</OnClick>
 					<OnEnter>
 						if ( self.tooltipText ) then
-						GameTooltip:SetOwner(self, EavesDrop.ToolTipAnchor);
-						GameTooltip:SetText(self.tooltipText, nil, nil, nil, nil, 1);
+							GameTooltip:SetOwner(self, EavesDrop.ToolTipAnchor);
+							GameTooltip:SetText(self.tooltipText, nil, nil, nil, nil, 1);
 						end
 					</OnEnter>
 					<OnLeave>
@@ -866,17 +866,17 @@
 			</OnLoad>
 			<OnDragStart>
 				if (not EavesDrop.db.profile["LOCKED"] ) then
-				self:StartMoving();
-				end
+			 		self:StartMoving();
+			 	end
 			</OnDragStart>
 			<OnDragStop>
 				self:StopMovingOrSizing();
 				local x, y = self:GetLeft(), self:GetTop()
-				local es = self:GetEffectiveScale()
-				local ps = UIParent:GetScale()
-				x = x*es - GetScreenWidth()*ps/2
-				y = y*es - GetScreenHeight()*ps/2
-				EavesDrop.db.profile.hx, EavesDrop.db.profile.hy = x, y
+        local es = self:GetEffectiveScale()
+        local ps = UIParent:GetScale()
+        x = x*es - GetScreenWidth()*ps/2
+        y = y*es - GetScreenHeight()*ps/2
+        EavesDrop.db.profile.hx, EavesDrop.db.profile.hy = x, y
 			</OnDragStop>
 		</Scripts>
 	</Frame>
