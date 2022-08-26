@@ -154,7 +154,7 @@ local function shortenValue(value)
   elseif value >= 10000 then
     value = string_format("%.1fk",value / 1000)
   end
-  return value
+  return tostring(value)
 end
 
 local function round(num, idp)
@@ -483,9 +483,9 @@ function EavesDrop:CombatEvent()
     if (critical) then text = critchar..text..critchar end
     if (crushing) then text = crushchar..text..crushchar end
     if (glancing) then text = glancechar..text..glancechar end
-    if (resisted) then text = string_format("%s (%d)", text, shortenValue(resisted)) end
-    if (blocked) then text = string_format("%s (%d)", text, shortenValue(blocked)) end
-    if (absorbed) then text = string_format("%s (%d)", text, shortenValue(absorbed))end
+    if (resisted) then text = string_format("%s (%s)", text, shortenValue(resisted)) end
+    if (blocked) then text = string_format("%s (%s)", text, shortenValue(blocked)) end
+    if (absorbed) then text = string_format("%s (%s)", text, shortenValue(absorbed))end
 
     if fromPlayer then
       if (self:TrackStat(inout, "hit", spellName, texture, SCHOOL_STRINGS[school], amount, critical, message)) then
@@ -531,7 +531,7 @@ function EavesDrop:CombatEvent()
     if toPlayer then
       totHealingIn = totHealingIn + amount
       if (amount < db["HFILTER"]) then return end
-      if (db["OVERHEAL"]) and overHeal > 0 then text = string_format("%d {%d}", shortenValue(amount-overHeal), shortenValue(overHeal)) end
+      if (db["OVERHEAL"]) and overHeal > 0 then text = string_format("%s {%s}", shortenValue(amount-overHeal), shortenValue(overHeal)) end
       if (critical) then text = critchar..text..critchar end
       if (db["HEALERID"] == true and not fromPlayer) then text = text.." ("..sourceName..")" end
       color = db["PHEAL"]
@@ -542,7 +542,7 @@ function EavesDrop:CombatEvent()
     elseif fromPlayer then
       totHealingOut = totHealingOut + amount
       if (amount < db["HFILTER"]) then return end
-      if (db["OVERHEAL"]) and overHeal > 0 then text = string_format("%d {%d}", shortenValue(amount-overHeal), shortenValue(overHeal)) end
+      if (db["OVERHEAL"]) and overHeal > 0 then text = string_format("%s {%s}", shortenValue(amount-overHeal), shortenValue(overHeal)) end
       if (critical) then text = critchar..text..critchar end
       color = db["THEAL"]
       if (self:TrackStat(inout, "heal", spellName, texture, SCHOOL_STRINGS[spellSchool], amount, critical, message)) then
@@ -630,7 +630,7 @@ end
 function EavesDrop:PLAYER_XP_UPDATE()
   local xp = UnitXP("player")
   local xpgained = xp - pxp
-  self:DisplayEvent(MISC, string_format("+%d (%s)", shortenValue(xpgained), XP), nil, db["EXPC"], nil)
+  self:DisplayEvent(MISC, string_format("+%s (%s)", shortenValue(xpgained), XP), nil, db["EXPC"], nil)
   pxp = xp
 end
 
@@ -990,7 +990,7 @@ function EavesDrop:ParseReflect(timestamp, event, hideCaster, sourceGUID, source
 
   --reflected events
   if (self.ReflectTarget == sourceName and sourceName == destName and self.ReflectSkill == spellName) then
-    local text = string_format("%s: %d", REFLECT, shortenValue(amount))
+    local text = string_format("%s: %s", REFLECT, shortenValue(amount))
     if (critical) then text = critchar..text..critchar end
     self:DisplayEvent(OUTGOING, text, texture, self:SpellColor(db["TSPELL"], SCHOOL_STRINGS[school]), messsage)
     self:ClearReflect()
