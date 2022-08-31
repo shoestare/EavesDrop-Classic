@@ -154,7 +154,7 @@ local function shortenValue(value)
   elseif value >= 10000 then
     value = string_format("%.1fk",value / 1000)
   end
-  return value
+  return tostring(value)
 end
 
 local function round(num, idp)
@@ -475,7 +475,7 @@ function EavesDrop:CombatEvent()
       outtype, intype = "TSPELL", "PSPELL"
     else
       spellId, spellName, spellSchool, amount, overDamage, school, resisted, blocked, absorbed, critical, glancing, crushing = a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12
-      texture = select(3, GetSpellInfo(spellId))
+      texture = select(3, GetSpellInfo(spellName))
       outtype, intype = "TSPELL", "PSPELL"
     end
     text = tostring(shortenValue(amount))
@@ -483,9 +483,9 @@ function EavesDrop:CombatEvent()
     if (critical) then text = critchar..text..critchar end
     if (crushing) then text = crushchar..text..crushchar end
     if (glancing) then text = glancechar..text..glancechar end
-    if (resisted) then text = string_format("%s (%d)", text, shortenValue(resisted)) end
-    if (blocked) then text = string_format("%s (%d)", text, shortenValue(blocked)) end
-    if (absorbed) then text = string_format("%s (%d)", text, shortenValue(absorbed))end
+    if (resisted) then text = string_format("%s (%s)", text, shortenValue(resisted)) end
+    if (blocked) then text = string_format("%s (%s)", text, shortenValue(blocked)) end
+    if (absorbed) then text = string_format("%s (%s)", text, shortenValue(absorbed))end
 
     if fromPlayer then
       if (self:TrackStat(inout, "hit", spellName, texture, SCHOOL_STRINGS[school], amount, critical, message)) then
@@ -509,7 +509,7 @@ function EavesDrop:CombatEvent()
   ------------buff/debuff gain----------------
   elseif etype == "BUFF" then
     spellId, spellName, spellSchool, auraType, amount = a1, a2, a3, a4, a5
-    texture = select(3, GetSpellInfo(spellId))
+    texture = select(3, GetSpellInfo(spellName))
     if toPlayer and db[auraType] then
       self:DisplayEvent(INCOMING, self:ShortenString(spellName), texture, db["P"..auraType], message)
     else return
@@ -517,7 +517,7 @@ function EavesDrop:CombatEvent()
   ------------buff/debuff lose----------------
   elseif etype == "FADE" then
     spellId, spellName, spellSchool, auraType, amount = a1, a2, a3, a4, a5
-    texture = select(3, GetSpellInfo(spellId))
+    texture = select(3, GetSpellInfo(spellName))
     if toPlayer and db[auraType.."FADE"] then
       self:DisplayEvent(INCOMING, self:ShortenString(spellName).." "..L["Fades"], texture, db["P"..auraType], message)
     else return
@@ -526,12 +526,12 @@ function EavesDrop:CombatEvent()
   elseif etype == "HEAL" then
     spellId, spellName, spellSchool, amount, overHeal, absorbed, critical = a1, a2, a3, a4, a5, a6, a7
     text = tostring(shortenValue(amount))
-    texture = select(3, GetSpellInfo(spellId))
+    texture = select(3, GetSpellInfo(spellName))
 
     if toPlayer then
       totHealingIn = totHealingIn + amount
       if (amount < db["HFILTER"]) then return end
-      if (db["OVERHEAL"]) and overHeal > 0 then text = string_format("%d {%d}", shortenValue(amount-overHeal), shortenValue(overHeal)) end
+      if (db["OVERHEAL"]) and overHeal > 0 then text = string_format("%s {%s}", shortenValue(amount-overHeal), shortenValue(overHeal)) end
       if (critical) then text = critchar..text..critchar end
       if (db["HEALERID"] == true and not fromPlayer) then text = text.." ("..sourceName..")" end
       color = db["PHEAL"]
@@ -542,7 +542,7 @@ function EavesDrop:CombatEvent()
     elseif fromPlayer then
       totHealingOut = totHealingOut + amount
       if (amount < db["HFILTER"]) then return end
-      if (db["OVERHEAL"]) and overHeal > 0 then text = string_format("%d {%d}", shortenValue(amount-overHeal), shortenValue(overHeal)) end
+      if (db["OVERHEAL"]) and overHeal > 0 then text = string_format("%s {%s}", shortenValue(amount-overHeal), shortenValue(overHeal)) end
       if (critical) then text = critchar..text..critchar end
       color = db["THEAL"]
       if (self:TrackStat(inout, "heal", spellName, texture, SCHOOL_STRINGS[spellSchool], amount, critical, message)) then
@@ -560,7 +560,7 @@ function EavesDrop:CombatEvent()
       tcolor = "TMELEE"
     else
       spellId, spellName, spellSchool, missType = a1, a2, a3, a4
-      texture = select(3, GetSpellInfo(spellId))
+      texture = select(3, GetSpellInfo(spellName))
       tcolor = "TSPELL"
     end
     text = _G[missType]
@@ -577,7 +577,7 @@ function EavesDrop:CombatEvent()
   elseif etype == "DRAIN" then
     if (db["GAINS"]) then
       spellId, spellName, spellSchool, amount, powerType, extraAmount = a1, a2, a3, a4, a5, a6
-      texture = select(3, GetSpellInfo(spellId))
+      texture = select(3, GetSpellInfo(spellName))
       if toPlayer then
         text = string_format("-%d %s", amount, string_nil(""))
         color = db["PGAIN"]
@@ -597,7 +597,7 @@ function EavesDrop:CombatEvent()
   elseif etype == "POWER" then
     if (db["GAINS"]) then
       spellId, spellName, spellSchool, amount, powerType = a1, a2, a3, a4, a5
-      texture = select(3, GetSpellInfo(spellId))
+      texture = select(3, GetSpellInfo(spellName))
       if toPlayer then
         if (amount < db["MFILTER"]) then return end
         color = db["PGAIN"]
@@ -630,7 +630,7 @@ end
 function EavesDrop:PLAYER_XP_UPDATE()
   local xp = UnitXP("player")
   local xpgained = xp - pxp
-  self:DisplayEvent(MISC, string_format("+%d (%s)", shortenValue(xpgained), XP), nil, db["EXPC"], nil)
+  self:DisplayEvent(MISC, string_format("+%s (%s)", shortenValue(xpgained), XP), nil, db["EXPC"], nil)
   pxp = xp
 end
 
@@ -984,13 +984,13 @@ end
 --Set last reflection
 function EavesDrop:ParseReflect(timestamp, event, hideCaster, sourceGUID, sourceName, sourceFlags, sourceFlags2, destGUID, destName, destFlags, destFlags2, ...)
   local spellId, spellName, spellSchool, amount, school, resisted, blocked, absorbed, critical, glancing, crushing = ...
-  local texture = select(3, GetSpellInfo(spellId))
+  local texture = select(3, GetSpellInfo(spellName))
   local text = amount
   local messsage = CombatLog_OnEvent(Blizzard_CombatLog_CurrentSettings, timestamp, event, hideCaster, sourceGUID, sourceName, sourceFlags, sourceFlags2, destGUID, destName, destFlags, destFlags2, ...)
 
   --reflected events
   if (self.ReflectTarget == sourceName and sourceName == destName and self.ReflectSkill == spellName) then
-    local text = string_format("%s: %d", REFLECT, shortenValue(amount))
+    local text = string_format("%s: %s", REFLECT, shortenValue(amount))
     if (critical) then text = critchar..text..critchar end
     self:DisplayEvent(OUTGOING, text, texture, self:SpellColor(db["TSPELL"], SCHOOL_STRINGS[school]), messsage)
     self:ClearReflect()
